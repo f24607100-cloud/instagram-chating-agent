@@ -1,0 +1,41 @@
+1. 🗓️ Smart Booking Integration (Cal.com / Calendly)
+Since your agent's primary goal is to "hop on a call," you can automate this.
+
+Feature: When the AI identifies a high-intent lead, it can automatically generate and send a personalized booking link.
+Next Step: Use the Cal.com API to check your availability in real-time and offer specific slots directly in the DM.
+2. 🎯 Lead Qualification Dashboard
+Currently, all conversations are in one list.
+
+Feature: Add a "Leads" tab that uses AI to categorize conversations into:
+Hot: Ready to book a call/start a project.
+Warm: Interested but has questions.
+Cold: Just greeting or general inquiry.
+Next Step: Add a "Status" badge to each conversation in your sidebar.
+3. 🧠 Project Knowledge Base (RAG)
+If someone asks, "What's your experience with Healthcare AI?" the agent might give a generic answer.
+
+Feature: Upload PDFs or link your portfolio website so the AI can search through your actual past work to answer specific technical questions.
+Next Step: Integrate a vector database (like Supabase Vector or Pinecone) to allow the agent to "read" your resume/portfolio.
+4. 🔗 Multi-Channel Sync (Notion / Slack / CRM)
+Don't live in the dashboard; get notified where you work.
+
+Feature: Automatically sync "Hot Leads" to a Notion database or send a Slack/Discord notification when a deal is close to being closed.
+Next Step: Add a webhook that triggers a notification when a user switches from "AI Mode" to "Human Mode."
+5. 💬 Comment-to-DM Automation
+Growth hackers love this.
+
+Feature: If someone comments a keyword (e.g., "AI") on one of your posts, the agent automatically sends them a DM to start the qualification flow.
+Next Step: Add a new webhook listener for comments in your src/app/api/webhook/route.ts.
+6. 📊 Conversion Analytics
+How well is the AI actually performing?
+
+Feature: A simple stats bar at the top of your dashboard showing:
+Total Messages Handled.
+Leads Captured.
+AI-to-Human handoff rate.
+Next Step: Create a new table in Supabase to track "Events" (Lead Captured, Call Booked).
+7. 📸 Image & Voice Note Support
+Instagram is visual.
+
+Feature: Use Vision models (like GPT-4o) to "see" screenshots people send (e.g., a bug report or a project brief) and respond intelligently.
+Next Step: Update the message processing logic to handle attachments from the Instagram webhook.

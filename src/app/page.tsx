@@ -1,11 +1,5 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Shell from "@/components/Shell";
-
-const AnalyticsDashboard = dynamic(() => import("@/components/AnalyticsDashboard"), {
-  ssr: false,
-});
+import AnalyticsDashboard from "@/components/AnalyticsDashboard";
 
 export default function Home() {
   return (

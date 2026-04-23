@@ -123,31 +123,40 @@ export async function POST(request: NextRequest) {
       return Response.json({ status: "stored_for_human" });
     }
 
-    // Fetch conversation history (last 20 messages for context)
+    // Fetch conversation history (last 6 messages for context)
     const { data: history } = await supabase
       .from("instagram_messages")
       .select("role, content")
       .eq("conversation_id", conversation.id)
-      .order("created_at", { ascending: true })
-      .limit(20);
+      .order("created_at", { ascending: false })
+      .limit(6);
+
+    // Reverse to maintain chronological order for AI
+    const chronologicalHistory = (history || []).reverse();
 
     // Get AI response
-    console.log(`Getting AI response...`);
+    console.log(`Getting AI response for convo ${conversation.id}...`);
+    console.log(`History count: ${chronologicalHistory.length}`);
+    if (chronologicalHistory.length > 0) {
+      console.log(`Last message in history: ${chronologicalHistory[chronologicalHistory.length-1].content}`);
+    }
+
     const aiResponse = await getAIResponse(
-      (history || []).map((m) => ({
+      chronologicalHistory.map((m) => ({
         role: m.role as "user" | "assistant",
-        content: m.content,
+        // Strip legacy [GPT-4o] debug prefix that was accidentally stored in old messages
+        content: m.content.replace(/^\[GPT-4o\]\s*/i, "").trim(),
       }))
     );
 
     // Send response via Instagram
-    await sendInstagramMessage(igsid, aiResponse);
+    await sendInstagramMessage(igsid, aiResponse.text);
 
     // Store AI response
     await supabase.from("instagram_messages").insert({
       conversation_id: conversation.id,
       role: "assistant",
-      content: aiResponse,
+      content: aiResponse.text,
     });
 
     // Update conversation timestamp again
@@ -156,7 +165,7 @@ export async function POST(request: NextRequest) {
       .update({ updated_at: new Date().toISOString() })
       .eq("id", conversation.id);
 
-    console.log(`AI responded: ${aiResponse}`);
+    console.log(`AI responded: ${aiResponse.text}`);
     return Response.json({ status: "replied" });
   } catch (error) {
     console.error("Webhook error details:", error);

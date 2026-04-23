@@ -37,5 +37,10 @@ export async function sendInstagramMessage(recipientIgsid: string, text: string)
       message: { text },
     }),
   });
-  return res.json();
+  
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(`Instagram API error: ${JSON.stringify(data)}`);
+  }
+  return data;
 }

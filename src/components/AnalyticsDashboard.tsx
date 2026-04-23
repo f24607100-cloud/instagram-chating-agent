@@ -134,7 +134,7 @@ export default function AnalyticsDashboard() {
                       paddingAngle={5}
                       dataKey="value"
                     >
-                      {stats?.topClients.map((entry, index) => (
+                      {stats?.topClients?.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
@@ -146,7 +146,7 @@ export default function AnalyticsDashboard() {
               </div>
               
               <div className="mt-6 space-y-3">
-                {stats?.topClients.map((client, i) => (
+                {stats?.topClients?.map((client, i) => (
                   <div key={i} className="flex items-center justify-between">
                      <div className="flex items-center gap-2">
                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }} />

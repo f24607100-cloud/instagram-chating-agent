@@ -69,7 +69,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <main className="md:ml-[240px] pt-16 md:h-screen flex flex-col overflow-hidden flex-1">
+      <main className="md:ml-[240px] pt-16 flex flex-col flex-1">
         {children}
       </main>
 

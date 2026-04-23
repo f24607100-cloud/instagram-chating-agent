@@ -184,7 +184,7 @@ export default function DashboardClient() {
         <div className="p-4 border-b border-[#2a2a3a]">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-[#a1a1aa]">Conversations</h2>
         </div>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
           {conversations.length === 0 ? (
             <div className="p-8 text-center text-gray-500 text-sm italic">No messages found</div>
           ) : (
@@ -271,7 +271,7 @@ export default function DashboardClient() {
             </div>
 
             {/* Messages Grid */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:y-6">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:y-6 scrollbar-thin">
               {messages.length === 0 ? (
                 <div className="flex items-center justify-center h-full text-[#a1a1aa] text-sm italic">No messages in this thread</div>
               ) : (
