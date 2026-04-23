@@ -96,6 +96,22 @@ export async function POST(request: NextRequest) {
       return Response.json({ status: "duplicate" });
     }
 
+    // Lead Detection (Email or Phone)
+    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+    const phoneRegex = /(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g;
+    
+    if (emailRegex.test(text) || phoneRegex.test(text)) {
+      await supabase.from("instagram_analytics_events").insert({
+        conversation_id: conversation.id,
+        event_type: "lead_captured",
+        metadata: { 
+          text_snippet: text.substring(0, 50),
+          detected_at: new Date().toISOString()
+        }
+      });
+      console.log(`Lead captured from ${igsid}!`);
+    }
+
     // Update conversation timestamp
     await supabase
       .from("instagram_conversations")

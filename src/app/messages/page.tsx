@@ -3,14 +3,14 @@
 import dynamic from "next/dynamic";
 import Shell from "@/components/Shell";
 
-const AnalyticsDashboard = dynamic(() => import("@/components/AnalyticsDashboard"), {
+const DashboardClient = dynamic(() => import("@/components/DashboardClient"), {
   ssr: false,
 });
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <Shell>
-      <AnalyticsDashboard />
+      <DashboardClient />
     </Shell>
   );
 }
