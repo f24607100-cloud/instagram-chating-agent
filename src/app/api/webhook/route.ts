@@ -18,9 +18,11 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
+  console.log("Webhook received body:", JSON.stringify(body, null, 2));
 
   // Only process instagram events
   if (body.object !== "instagram") {
+    console.log("Webhook ignored: object is not instagram");
     return Response.json({ status: "ignored" });
   }
 
@@ -28,16 +30,19 @@ export async function POST(request: NextRequest) {
   const messaging = entry?.messaging?.[0];
 
   if (!messaging) {
+    console.log("Webhook ignored: no messaging entry");
     return Response.json({ status: "no_messaging" });
   }
 
   // Skip echo messages (sent by our own page)
   if (messaging.message?.is_echo) {
+    console.log("Webhook ignored: is_echo message");
     return Response.json({ status: "echo_ignored" });
   }
 
   // Only handle text messages
   if (!messaging.message?.text) {
+    console.log("Webhook ignored: non-text message");
     return Response.json({ status: "non_text" });
   }
 
